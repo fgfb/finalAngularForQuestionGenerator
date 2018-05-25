@@ -4,7 +4,7 @@ import { QuestionService } from "../questionservice.service";
 import { Router, RouterStateSnapshot } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
-import { MatDialog } from '@angular/material';
+import { MatDialog } from "@angular/material";
 import { QuestionDialogComponent } from "../question-dialog/question-dialog.component";
 
 @Component({
@@ -14,7 +14,7 @@ import { QuestionDialogComponent } from "../question-dialog/question-dialog.comp
 })
 export class QuestionsComponent implements OnInit {
   topicName: string;
-  categoryId: number = 1;
+  categoryId: number;
   questionGen: QuestionGen[];
 
   constructor(
@@ -22,10 +22,9 @@ export class QuestionsComponent implements OnInit {
     private location: Location,
     private router: Router,
     private questionService: QuestionService,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {
     const snapshot: RouterStateSnapshot = router.routerState.snapshot;
-        console.log(snapshot);
   }
 
   ngOnInit() {
@@ -34,10 +33,7 @@ export class QuestionsComponent implements OnInit {
 
   getQuestions() {
     this.route.queryParams.subscribe(params => {
-      // console.log(
-      //   "This is in question component" + params.topicName + this.categoryId
-      // );
-      //this.categoryId = params.categoryId;
+      this.categoryId = params.categoryId;
       this.topicName = params.topicName;
     });
     this.questionService
@@ -47,15 +43,5 @@ export class QuestionsComponent implements OnInit {
 
   goBack() {
     this.location.back();
-  }
-
-  openDialog(): void {
-    let dialogRef = this.dialog.open(QuestionDialogComponent, {
-      width: '500px',
-    });
- 
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
-    });
   }
 }

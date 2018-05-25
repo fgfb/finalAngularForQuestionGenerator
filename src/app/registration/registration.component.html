@@ -5,7 +5,7 @@
       <a routerLink="/category-details" [queryParams]="{categoryId:category.categoryId}">
         <img style="width: 245px; height: 240px;" mat-card-image src="{{ category.categoryImage }}" alt="Photo of a {{ category.categoryName }}">
       <mat-card-content>
-        <h3 style="text-align: center">{{ category.categoryName | uppercase }}</h3>
+        <h2 style="text-align: center">{{ category.categoryName | uppercase }}</h2>
       </mat-card-content>
       </a>
     </mat-card>

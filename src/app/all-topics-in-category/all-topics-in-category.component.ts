@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { QuestionGen } from "../questionGen";
 import { QuestionService } from "../questionservice.service";
-import { Router } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { MatDialog } from '@angular/material';
@@ -19,9 +18,7 @@ export class AllTopicsInCategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router,
     private questionService: QuestionService,
-    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -39,15 +36,5 @@ export class AllTopicsInCategoryComponent implements OnInit {
 
   goBack() {
     this.location.back();
-  }
-
-  openDialog(): void {
-    let dialogRef = this.dialog.open(TopicDialogComponent, {
-      width: '500px',
-    });
- 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 }

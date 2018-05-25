@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { QuestionService } from "../questionservice.service";
+import { ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-question-dialog",
@@ -8,6 +10,8 @@ import { QuestionService } from "../questionservice.service";
 })
 export class QuestionDialogComponent implements OnInit {
   questionGen;
+  categoryId: number;
+  topicName: string;
   questionId: number;
   questionLevel: number;
   questionStem: string;
@@ -17,7 +21,11 @@ export class QuestionDialogComponent implements OnInit {
   option4: string;
   correctAnswer: string;
 
-  constructor(private questionService: QuestionService) {}
+  constructor(
+    private questionService: QuestionService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
 
   ngOnInit() {}
 
@@ -36,8 +44,20 @@ export class QuestionDialogComponent implements OnInit {
         }
       ]
     };
-    this.questionService.addQuestion(question).subscribe(questionGen => {
-      this.questionGen.push(questionGen), alert("Topic added successfully");
+
+    this.route.queryParams.subscribe(params => {
+      this.categoryId = params.categoryId;
+      this.topicName = params.topicName;
+      console.log(this.categoryId, this.topicName);
     });
+    this.questionService
+      .addQuestion(this.categoryId, this.topicName, question)
+      .subscribe(questionGen => {
+        this.questionGen = questionGen;
+      });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

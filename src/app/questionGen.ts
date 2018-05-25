@@ -15,10 +15,10 @@ export class QuestionGen {
           questionId: number;
           questionLevel: number;
           questionStem: String;
-          Option1: String;
-          Option2: String;
-          Option3: String;
-          Option4: String;
+          option1: String;
+          option2: String;
+          option3: String;
+          option4: String;
           correctAnswer: String;
           user: [
             {

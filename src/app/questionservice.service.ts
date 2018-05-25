@@ -9,15 +9,14 @@ export class QuestionService {
   constructor(private http: HttpClient) {}
 
   url = "http://localhost:8080/api/v1/question-generator/category";
-  
+
   getCategories(): Observable<QuestionGen[]> {
     return this.http.get<QuestionGen[]>(this.url);
   }
 
-  addTopic(questionGen): Observable<QuestionGen[]>{
-    const categoryId = 1;
+  addTopic(categoryId: number, questionGen): Observable<QuestionGen[]> {
     const getUrl = `${this.url}/${categoryId}/topics`;
-    return this.http.put<QuestionGen[]>(getUrl,questionGen);
+    return this.http.put<QuestionGen[]>(getUrl, questionGen);
   }
 
   getTopics(categoryId: number): Observable<QuestionGen[]> {
@@ -25,15 +24,32 @@ export class QuestionService {
     return this.http.get<QuestionGen[]>(getUrl);
   }
 
-  addQuestion(questionGen): Observable<QuestionGen[]>{
-    const categoryId = 1;
-    const topicName = "chemistry";
+  addQuestion(
+    categoryId: number,
+    topicName: string,
+    questionGen
+  ): Observable<QuestionGen[]> {
     const getUrl = `${this.url}/${categoryId}/${topicName}/questions`;
-    return this.http.put<QuestionGen[]>(getUrl,questionGen);
+    return this.http.put<QuestionGen[]>(getUrl, questionGen);
   }
 
-  getQuestions(categoryId: number, topicName: string): Observable<QuestionGen[]> {
+  getQuestionById(categoryId: number, topicName: string, questionId: number): Observable<QuestionGen> {
+    const getUrl = `${this.url}/${categoryId}/${topicName}/${questionId}`;
+    return this.http.get<QuestionGen>(getUrl);
+  }
+
+  getQuestions(categoryId: number,topicName: string): Observable<QuestionGen[]> {
     const getUrl = `${this.url}/${categoryId}/${topicName}/questions`;
     return this.http.get<QuestionGen[]>(getUrl);
+  }
+
+  updateQuestion(categoryId: number, topicName: string, questionId: number, questionGen: QuestionGen): Observable<QuestionGen>{
+    const getUrl = `${this.url}/${categoryId}/${topicName}/${questionId}`;
+    return this.http.put<QuestionGen>(getUrl,questionGen);
+  }
+
+  deleteQuestion(categoryId: number, topicName:string, questionId: number, questionGen): Observable<QuestionGen> {
+    const getUrl = `${this.url}/${categoryId}/${topicName}/${questionId}`;
+    return this.http.delete<QuestionGen>(getUrl);
   }
 }
